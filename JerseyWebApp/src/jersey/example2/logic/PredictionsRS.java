@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.servlet.ServletContext;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -91,6 +93,57 @@ public class PredictionsRS {
 		int id = pList.add(who, what);
 		msg = "Prediction " + id + " created(who =" + who + " what = " + what + ").\n";
 		
+		return Response.ok(msg, "text/plain").build();
+	}
+	
+	@PUT
+	@Path("/update")
+	@Produces({MediaType.TEXT_PLAIN})
+	public Response update(@FormParam("id") int id, @FormParam("who") String who, @FormParam("what") String what) {
+		
+		checkContext();
+		
+		String msg = null;
+		
+		if (who == null || what == null) {
+			msg = "Neither who nor what is given: nothing to edit.\n";
+		}
+		
+		Prediction prediction = pList.find(id);
+		if (prediction == null) {
+			msg = "There is no prediction with ID: " + id + "\n.";
+		}
+		
+		if (msg != null) {
+			return Response.status(Response.Status.BAD_GATEWAY).entity(msg).type(MediaType.TEXT_PLAIN).build();
+		}
+		
+		prediction.setWho(who);
+		prediction.setWhat(what);
+		msg = "Prediction " + id + " has been updated.\n";
+		
+		return Response.ok(msg, MediaType.TEXT_PLAIN).build();
+	}
+	
+	@DELETE
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/delete")
+	public Response delete(@PathParam("id") int id) {
+		
+		checkContext();
+		String msg = null;
+		
+		Prediction prediction = pList.find(id);
+		
+		if (prediction == null) {
+			
+			msg = "There is no prediction with ID " + id + ". Cannot delete.\n";
+			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
+		}
+		
+		pList.getPredictions().remove(prediction);
+		
+		msg = "Prediction " + id + " deleted.\n";
 		return Response.ok(msg, "text/plain").build();
 	}
 	
