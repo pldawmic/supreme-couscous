@@ -16,4 +16,9 @@ public class Adage {
 	
 	public void setWordCount(int wordCount) {this.wordCount = wordCount;}
 	public int getWordCount() {return this.wordCount;}
+	
+	@Override
+	public String toString() {
+		return this.words;
+	}
 }

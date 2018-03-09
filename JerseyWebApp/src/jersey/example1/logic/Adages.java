@@ -9,6 +9,9 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jersey.example1.pojo.Adage;
 
 @Path("/")
@@ -24,9 +27,23 @@ public class Adages {
 	
 	public Adages() {}
 	
+	
+	@GET
+	@Produces({MediaType.TEXT_PLAIN})
+	public String getPlain() {
+		return createAdage().toString() + "\n";
+	}
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/json")
+	public String getJson() {
+		return toJson(createAdage());
+	}
+	
 	@GET
 	@Produces({MediaType.APPLICATION_XML})
-	@Path("/plain")
+	@Path("/xml")
 	public JAXBElement<Adage> getXml() {
 		return toXml(createAdage());
 	}
@@ -41,5 +58,18 @@ public class Adages {
 	
 	private JAXBElement<Adage> toXml(Adage adage) {
 		return new JAXBElement<Adage>(new QName("adage"), Adage.class, adage);
+	}
+	
+	private String toJson(Adage adage) {
+		
+		String json = "Json error occured.";
+		
+		try {
+			json = new ObjectMapper().writeValueAsString(adage);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return json;
 	}
 }
