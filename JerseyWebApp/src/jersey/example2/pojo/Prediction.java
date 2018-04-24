@@ -1,7 +1,9 @@
 package jersey.example2.pojo;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "prediction")
 public class Prediction implements Comparable<Prediction> {
 
 	private String who;
