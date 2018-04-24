@@ -128,7 +128,7 @@ public class PredictionsRS {
 	@DELETE
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/delete")
-	public Response delete(@PathParam("id") int id) {
+	public Response delete(@FormParam("id") int id) {
 		
 		checkContext();
 		String msg = null;
