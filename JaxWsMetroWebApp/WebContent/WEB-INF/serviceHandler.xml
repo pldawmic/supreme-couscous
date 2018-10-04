@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+<handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
+  <handler-chain>
+    <handler>
+      <handler-name>jaxws.example2.handler.ServiceHashHandler</handler-name>
+      <handler-class>jaxws.example2.handler.ServiceHashHandler</handler-class>
+    </handler>
+  </handler-chain>
+</handler-chains>
