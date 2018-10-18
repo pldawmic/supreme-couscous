@@ -106,6 +106,7 @@ public class PredictionsSOAP {
 			
 			MessageContext mCtx = wsCtx.getMessageContext();
 			servletCtx = (ServletContext) mCtx.get(MessageContext.SERVLET_CONTEXT);
+			predictions.setServletContext(servletCtx);
 		}
 	}
 	
