@@ -19,7 +19,7 @@
 			
 			
 			if (!verb.equalsIgnoreCase("GET")) {
-				response.sendError(response.SC_METHOD_NOT_ALLOWED, "Only GET requests are allowed.");
+				response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Only GET requests are allowed.");
 			} else {
 				preds.setServletContext(application);
 				out.println(preds.getPredictions());

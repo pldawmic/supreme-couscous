@@ -16,6 +16,10 @@ public class VerbosityException_Exception
 {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1636294932943034772L;
+	/**
      * Java type that goes as soapenv:Fault detail element.
      * 
      */

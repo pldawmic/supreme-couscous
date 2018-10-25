@@ -19,6 +19,7 @@ class IdHandler implements LogicalHandler<LogicalMessageContext> {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean handleMessage(LogicalMessageContext lmctx) {
 		
 		Boolean outbound = (Boolean) lmctx.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
@@ -31,7 +32,7 @@ class IdHandler implements LogicalHandler<LogicalMessageContext> {
 				Object payload = msg.getPayload(jaxbCtx);
 				// Check payload to be sure it's what we want.
 				if (payload instanceof JAXBElement) {
-					Object value = ((JAXBElement) payload).getValue();
+					Object value = ((JAXBElement<?>) payload).getValue();
 					// Three possibilities of interest: GetOne, Edit, or Delete
 					int id = 0;
 					boolean getOne, edit, delete;
@@ -69,7 +70,7 @@ class IdHandler implements LogicalHandler<LogicalMessageContext> {
 						else if (delete)
 							((Delete) value).setArg0(newId);
 						// Update payload.
-						((JAXBElement) payload).setValue(value);
+						((JAXBElement<Object>) payload).setValue(value);
 						// Update message
 						msg.setPayload(payload, jaxbCtx);
 					}
