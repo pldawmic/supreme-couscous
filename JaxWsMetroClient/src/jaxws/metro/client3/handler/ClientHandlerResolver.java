@@ -23,6 +23,7 @@ public class ClientHandlerResolver implements HandlerResolver {
 		
 		List<Handler> handlerChain = new ArrayList<Handler>();
 		
+		handlerChain.add(new IdHandler());
 		handlerChain.add(new ClientHashHandler(this.name, this.key));
 		
 		return handlerChain;

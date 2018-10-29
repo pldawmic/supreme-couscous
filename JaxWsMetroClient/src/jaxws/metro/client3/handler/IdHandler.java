@@ -28,8 +28,9 @@ class IdHandler implements LogicalHandler<LogicalMessageContext> {
 			
 			LogicalMessage msg = lmctx.getMessage();
 			try {
-				JAXBContext jaxbCtx = JAXBContext.newInstance("clientSOAP");
+				JAXBContext jaxbCtx = JAXBContext.newInstance("jaxws.metro.client3");
 				Object payload = msg.getPayload(jaxbCtx);
+				
 				// Check payload to be sure it's what we want.
 				if (payload instanceof JAXBElement) {
 					Object value = ((JAXBElement<?>) payload).getValue();
