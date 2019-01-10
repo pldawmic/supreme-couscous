@@ -6,4 +6,5 @@ Inc.//DTD Web Application 2.3//EN"
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
   <endpoint name="RandService" implementation="jaxws.example1.RandImpl" url-pattern="/rs"/>
   <endpoint name="PredictionsSOAP" implementation="jaxws.example2.PredictionsSOAP" url-pattern="/prediction"/>
+  <endpoint name="SkiImageService" implementation="jaxws.example3.SkiImageService" url-pattern="/skiimageservice"/>
 </endpoints>
