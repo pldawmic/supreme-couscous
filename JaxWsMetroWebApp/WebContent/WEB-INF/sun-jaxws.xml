@@ -7,4 +7,5 @@ Inc.//DTD Web Application 2.3//EN"
   <endpoint name="RandService" implementation="jaxws.example1.RandImpl" url-pattern="/rs"/>
   <endpoint name="PredictionsSOAP" implementation="jaxws.example2.PredictionsSOAP" url-pattern="/prediction"/>
   <endpoint name="SkiImageService" implementation="jaxws.example3.SkiImageService" url-pattern="/skiimageservice"/>
+  <endpoint name="MtomSkiImageService" implementation="jaxws.example4.MtomSkiImageService" url-pattern="/mtomskiimageservice"/>
 </endpoints>
