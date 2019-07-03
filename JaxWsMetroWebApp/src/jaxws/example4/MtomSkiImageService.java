@@ -22,22 +22,22 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.soap.SOAPBinding;
 
-@WebService(wsdlLocation = "../../WEB-INF/mtomWsdl/mtom.wsdl")
-@BindingType(value=SOAPBinding.SOAP11HTTP_MTOM_BINDING)
+@WebService(wsdlLocation = "WEB-INF/wsdl/mtom.wsdl")
+@BindingType(value = SOAPBinding.SOAP11HTTP_MTOM_BINDING)
 public class MtomSkiImageService {
-	
+
 	private Map<String, String> photos;
 
 	@Resource
 	private WebServiceContext wsContext;
-	
+
 	public MtomSkiImageService() {
 
 		photos = new HashMap<String, String>();
 		photos.put("nordic", "/WEB-INF/skiImages/nordic.jpg");
 		photos.put("alpine", "/WEB-INF/skiImages/alpine.jpg");
 	}
-	
+
 	@WebMethod
 	public Image getImage(String name) {
 		return createImage(name);
@@ -49,16 +49,16 @@ public class MtomSkiImageService {
 	}
 
 	private Image createImage(String name) {
-		
+
 		String fileName = photos.get(name);
-		
+
 		byte[] bytes = getRawBytes(fileName);
 		ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-		
+
 		Iterator<?> iterators = ImageIO.getImageReadersByFormatName("jpeg");
 		ImageReader iterator = (ImageReader) iterators.next();
 		Image image = null;
-		
+
 		try {
 			ImageInputStream iis = ImageIO.createImageInputStream(in);
 			iterator.setInput(iis, true);
@@ -71,7 +71,7 @@ public class MtomSkiImageService {
 	}
 
 	private List<Image> createImageList() {
-		
+
 		List<Image> list = new ArrayList<Image>();
 		for (String key : photos.keySet()) {
 			Image image = createImage(key);
@@ -82,18 +82,17 @@ public class MtomSkiImageService {
 	}
 
 	private byte[] getRawBytes(String fileName) {
-		
+
 		if (fileName == null)
 			fileName = "nordic.jpg";
-		
+
 		ServletContext servletCtx = (ServletContext) wsContext.getMessageContext().get(MessageContext.SERVLET_CONTEXT);
-		
-		
+
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			
+
 			InputStream in = servletCtx.getResourceAsStream(fileName);
-			
+
 			byte[] buffer = new byte[2048];
 			int n = 0;
 			while ((n = in.read(buffer)) != -1)
@@ -102,7 +101,7 @@ public class MtomSkiImageService {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		return out.toByteArray();
 	}
 }
